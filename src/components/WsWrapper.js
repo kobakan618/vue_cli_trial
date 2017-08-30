@@ -4,7 +4,7 @@ var ws = null
 /**
  * WebSocket接続関数
  */
-export var wsOpen = function (name, onopen, onmessage, onclose) {
+export var wsOpen = function (wsname, usrname, onopen, onmessage, onclose) {
   if (ws == null) {
     var hostname = window.location.hostname
     var port = window.location.port
@@ -13,7 +13,7 @@ export var wsOpen = function (name, onopen, onmessage, onclose) {
     if (protocol === 'https:') {
       wsprotocol = 'wss://'
     }
-    ws = new WebSocket(wsprotocol + hostname + ':' + port + '/ws' + '?username=' + name)
+    ws = new WebSocket(wsprotocol + hostname + ':' + port + '/' + wsname + '?username=' + usrname)
 
     ws.onopen = function () {
       onopen()

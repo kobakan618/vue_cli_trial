@@ -39,11 +39,12 @@
               </h3>
             </div>
             <div class="panel-body">
-              <!--音声認識コンポーネント-->
+              <!--音声認識子コンポーネント描画
+                                                                    -->
               <voiceRecognition></voiceRecognition>
               <br>
-              <!--チャットコンポーネント-->
               <div class="chat-timeline">
+                <!--メッセージ子コンポーネント描画-->
                 <message v-for="chat in chatLogs" :my_name="my_name" :chat_view="chat_view" :key="chat.id" :time="chat.time" :name="chat.name" :message="chat.message" :tag="chat.tag">
                 </message>
               </div>
@@ -68,7 +69,8 @@ export default {
   },
   data() {
     return {
-      my_name: '',
+      meetingName: '',
+      myName: '',
       chat_view: true,
       input_message: '',
       chatLogs: [],
@@ -76,19 +78,26 @@ export default {
       attendees: []
     }
   },
-  mounted: function() {
+  mounted() {
     this.start('test')
   },
-  beforeDestroy: function() {
+  beforeRouteUpdate(to, from, next) {
     this.stop()
+    this.start('test')
+    next()
+  },
+  beforeRouteLeave(to, from, next) {
+    this.stop()
+    next()
   },
   methods: {
     start(name) {
+      this.meetingName = this.$route.params.id
       this.my_name = name
       this.chatLogs = []
       this.attendees = []
       this.purpose = ''
-      wsOpen(this.my_name, this.post_ws_onopen, this.post_ws_onmessage, this.post_ws_onclose)
+      wsOpen(this.meetingName, this.my_name, this.post_ws_onopen, this.post_ws_onmessage, this.post_ws_onclose)
     },
     stop() {
       wsClose(this.my_name)
@@ -230,5 +239,9 @@ span[data-badge-bottom-right]:before {
 .panel-heading {
   height: 20px;
   padding: 0;
+}
+
+.container-fluid {
+  background-color: #f0f0f0;
 }
 </style>
