@@ -1,3 +1,5 @@
+// Author: "Hiroshi Kobayashi"
+// Copyright © 2017 RICOH Co, Ltd. All rights reserved
 <template>
   <div>
     <select v-model="tag" options="tagOptions" v-on:change="update()">

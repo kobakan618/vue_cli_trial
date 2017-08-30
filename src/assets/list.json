@@ -1,0 +1,14 @@
+[
+	{
+		"id": "1234", 
+		"name": "sample meeting1", 
+		"promoter": "tester1", 
+		"when": "2017-01-01 01:01:10.123456 +0900 JST"
+	}, 
+	{
+		"id": "2345", 
+		"name": "sample meeting2", 
+		"promoter": "tester2", 
+		"when": "2017-01-02 01:01:10.123456 +0900 JST"
+	}
+]

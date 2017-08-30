@@ -1,13 +1,14 @@
+// Author: "Hiroshi Kobayashi"
+// Copyright © 2017 RICOH Co, Ltd. All rights reserved
 <template>
   <div>
-    音声認識利用設定
-    <select class="form-control" v-model="selected_lang" options="langOptions" v-on:change="reset()">
+    <select class="form-control input-sm" v-model="selected_lang" options="langOptions" v-on:change="reset()">
       <option v-for="option in langOptions" :key="option.key" :value="option.value">
         {{ option.text }}
       </option>
     </select>
     <p class="text-center" v-bind:class="statusClass">{{status}}</p>
-    <textarea readonly contenteditable="false" class="form-control" v-model="voiceText" placeholder="自分の音声認識結果が表示されます" rows="2"></textarea>
+    <textarea readonly contenteditable="false" class="form-control input-sm" v-model="voiceText" placeholder="自分の音声認識結果が表示されます" rows="1"></textarea>
   </div>
 </template>
 
@@ -33,9 +34,9 @@ export default {
       status: VR_STATUS.stopped,
       selected_lang: '',
       langOptions: [
-        { key: 1, text: '利用しない', value: '' },
-        { key: 2, text: '日本語', value: 'ja-JP' },
-        { key: 3, text: '英語', value: 'en-US' }
+        { key: 1, text: '音声認識-利用しない', value: '' },
+        { key: 2, text: '音声認識-日本語', value: 'ja-JP' },
+        { key: 3, text: '音声認識-英語', value: 'en-US' }
       ],
       voiceText: '',
       recognitionObj: null,

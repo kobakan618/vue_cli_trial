@@ -1,8 +1,15 @@
+// Author: "Hiroshi Kobayashi"
+// Copyright © 2017 RICOH Co, Ltd. All rights reserved
 <template>
   <div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-3">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">会議ID:{{ $route.params.id }}</h3>
+            </div>
+          </div>
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">目的</h3>
@@ -27,20 +34,20 @@
         <div class="col-xs-9">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">ディスカッションエリア</h3>
+              <h3 class="panel-title">ディスカッションエリア (チャット風表示
+                <input type="checkbox" v-model="chat_view">)
+              </h3>
             </div>
             <div class="panel-body">
               <!--音声認識コンポーネント-->
               <voiceRecognition></voiceRecognition>
               <br>
               <!--チャットコンポーネント-->
-              チャット風表示
-              <input type="checkbox" v-model="chat_view"> </input>
               <div class="chat-timeline">
                 <message v-for="chat in chatLogs" :my_name="my_name" :chat_view="chat_view" :key="chat.id" :time="chat.time" :name="chat.name" :message="chat.message" :tag="chat.tag">
                 </message>
               </div>
-              <textarea v-model="input_message" class="form-control" placeholder="発言・議事メモ等の手動入力(Enterで確定)" rows="2" v-on:keyup.enter="send_message()"></textarea>
+              <textarea v-model="input_message" class="form-control input-sm" placeholder="発言・議事メモ等の手動入力(Enterで確定)" rows="2" v-on:keyup.enter="send_message()"></textarea>
             </div>
           </div>
         </div>
@@ -68,6 +75,12 @@ export default {
       purpose: '',
       attendees: []
     }
+  },
+  mounted: function() {
+    this.start('test')
+  },
+  beforeDestroy: function() {
+    this.stop()
   },
   methods: {
     start(name) {
@@ -150,15 +163,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .chat-timeline {
-  height: 400px;
+  height: 300px;
   overflow-y: scroll;
   overflow-x: visible;
   border: solid #008080;
   background-color: #D8F3F0;
 }
-
-
-/* ブロック要素にアイコンバッジを表示 */
 
 span[data-badge-top-left],
 span[data-badge-top-right],
@@ -171,9 +181,6 @@ span[data-badge-bottom-right] {
   border-radius: 6px;
   color: #fff;
 }
-
-
-/* アイコン部 */
 
 span[data-badge-top-left]:before,
 span[data-badge-top-right]:before,
@@ -218,5 +225,10 @@ span[data-badge-bottom-right]:before {
   right: 0;
   transform: translate(50%, 50%);
   content: attr(data-badge-bottom-right)"";
+}
+
+.panel-heading {
+  height: 20px;
+  padding: 0;
 }
 </style>

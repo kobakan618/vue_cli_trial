@@ -1,3 +1,5 @@
+// Author: "Hiroshi Kobayashi"
+// Copyright © 2017 RICOH Co, Ltd. All rights reserved
 var ws = null
 /**
  * WebSocket接続関数
