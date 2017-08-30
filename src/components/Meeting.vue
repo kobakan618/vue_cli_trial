@@ -15,7 +15,7 @@
               <h3 class="panel-title">目的</h3>
             </div>
             <div class="panel-body">
-              <textarea v-model="purpose" class="form-control" placeholder="会議の目的を入力(Tabで確定)" rows="2" v-on:blur="update()"></textarea>
+              <textarea v-model="purpose" class="form-control input-sm" placeholder="会議の目的を入力(Tabで確定)" rows="2" v-on:blur="update()"></textarea>
             </div>
           </div>
           <div class="panel panel-primary">
@@ -40,7 +40,7 @@
             </div>
             <div class="panel-body">
               <!--音声認識子コンポーネント描画
-                                                                    -->
+                                                                      -->
               <voiceRecognition></voiceRecognition>
               <br>
               <div class="chat-timeline">
