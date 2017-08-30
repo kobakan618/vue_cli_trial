@@ -55,6 +55,18 @@ export default {
       }
     }
   },
+  mounted() {
+    this.start('test')
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.stop()
+    this.start('test')
+    next()
+  },
+  beforeRouteLeave(to, from, next) {
+    this.stop()
+    next()
+  },
   methods: {
     start(name) {
       this.my_name = name
@@ -71,7 +83,7 @@ export default {
       window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 
       if (this.recognitionObj == null) {
-        this.recognitionObj = window.webkitSpeechRecognition()
+        this.recognitionObj = new window.webkitSpeechRecognition()
       }
       this.recognitionObj.lang = this.selected_lang
       this.recognitionObj.interimResults = true
@@ -147,7 +159,6 @@ export default {
           }, 2000)
         }
       }
-      this.isActive = true
       this.staus = VR_STATUS.waiting
       this.recognitionObj.start()
     },

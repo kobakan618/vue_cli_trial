@@ -1,7 +1,7 @@
 // Author: "Hiroshi Kobayashi"
 // Copyright © 2017 RICOH Co, Ltd. All rights reserved
 <template>
-  <div>
+  <section class="main">
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-3">
@@ -40,7 +40,7 @@
             </div>
             <div class="panel-body">
               <!--音声認識子コンポーネント描画
-                                                                      -->
+                                                                                    -->
               <voiceRecognition></voiceRecognition>
               <br>
               <div class="chat-timeline">
@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -62,7 +62,7 @@ import Message from './Message.vue'
 import VoiceRecognition from './VoiceRecognition.vue'
 import { wsOpen, wsClose, msSend } from './WsWrapper.js'
 export default {
-  name: 'Meethings',
+  name: 'Meething',
   components: {
     message: Message,
     voiceRecognition: VoiceRecognition
@@ -171,6 +171,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.main {
+  position: absolute;
+  padding-top: 60px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+}
+
 .chat-timeline {
   height: 300px;
   overflow-y: scroll;

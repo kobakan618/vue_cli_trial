@@ -16,7 +16,8 @@ module.exports = {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     'one-var': 0,
-    "no-eval": 1,
+    "no-eval": 0,
+    "new-cap": 0,
     // allow async-await
     'generator-star-spacing': 0,
     "no-multiple-empty-lines": 0,

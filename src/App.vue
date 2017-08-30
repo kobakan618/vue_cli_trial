@@ -6,26 +6,28 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample3">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="#">
-            UMAYADO
+            UMAYADORY
           </a>
         </div>
-        <div class="collapse navbar-collapse" id="navbarEexample3">
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="名前を入力して下さい">
-            </div>
-            <button type="button" class="btn btn-primary start-button">
-              <i class="start-text"></i>
-            </button>
-          </form>
-        </div>
+        <ul class="nav pull-right">
+          <template v-if="userName === ''">
+            <button type="button" class="btn btn-default navbar-btn" v-on:click="logout">Login</button>
+          </template>
+          <template v-else>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                {{userName}}
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  <a @click="logout">Logout</a>
+                </li>
+              </ul>
+            </li>
+          </template>
+        </ul>
       </div>
     </nav>
     <transition name="fade">
@@ -35,10 +37,25 @@
 </template>
 
 <script>
+import { getUserInfo, initUserInfo } from './components/UserInfo.js'
 export default {
-  name: 'app'
-}
+  name: 'app',
+  data() {
+    return {
+      userName: getUserInfo()
+    }
+  },
+  mounted() {
 
+  },
+  methods: {
+    logout() {
+      // ログアウトAPIを呼び出す
+      initUserInfo()
+      this.userName = getUserInfo()
+    }
+  }
+}
 </script>
 
 <style>
@@ -48,7 +65,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 .fade-enter-active,

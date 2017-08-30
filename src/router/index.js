@@ -3,16 +3,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Meeting from '@/components/Meeting'
-import MeetingList from '@/components/MeetingList'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'MeetingList',
-      component: MeetingList
+      name: 'Home',
+      component: Home
     },
     {
       path: '/meetings/:id',
