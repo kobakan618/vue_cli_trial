@@ -14,7 +14,8 @@
 
 <script>
 import swal from '../../static/sweetalert.min.js'
-import { msSend } from './WsWrapper.js'
+import WsWrapper from '../commonUtils/WsWrapper.js'
+import PropertyStore from '../commonUtils/PropertyStore.js'
 /**
  * 音声認識ステータス定義
  */
@@ -56,11 +57,11 @@ export default {
     }
   },
   mounted() {
-    this.start('test')
+    this.start()
   },
   beforeRouteUpdate(to, from, next) {
     this.stop()
-    this.start('test')
+    this.start()
     next()
   },
   beforeRouteLeave(to, from, next) {
@@ -68,8 +69,8 @@ export default {
     next()
   },
   methods: {
-    start(name) {
-      this.my_name = name
+    start() {
+      this.my_name = PropertyStore.userInfo.name
       if (!this.isActive) {
         return
       }
@@ -137,7 +138,7 @@ export default {
           if (results[i].isFinal) {
             speechStr = results[i][0].transcript
             self.voiceText = speechStr
-            msSend(self.my_name, speechStr)
+            WsWrapper.msSend(self.my_name, speechStr)
             self.status = VR_STATUS.waiting
           }
           else {

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { msUpdate } from './WsWrapper.js'
+import WsWrapper from '../commonUtils/WsWrapper.js'
 // メッセージタグ種別
 const MSG_TAG = {
   none: 'none',
@@ -37,7 +37,6 @@ const focus = {
   }
 }
 export default {
-  name: 'Message',
   directives: { focus },
   props: {
     my_name: {
@@ -93,7 +92,7 @@ export default {
   methods: {
     update() {
       this.edit = false
-      msUpdate(this.key, this.name, this.message, this.tag)
+      WsWrapper.msUpdate(this.key, this.name, this.message, this.tag)
     }
   }
 }

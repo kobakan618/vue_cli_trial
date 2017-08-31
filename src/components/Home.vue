@@ -71,7 +71,7 @@ export default {
     },
     createMeeting() {
       if (this.createMeetingName === '') {
-        this.$swal('Oops...', 'Something went wrong!', 'error')
+        alert('test')
       }
       else {
         axios.post('/meeting', { name: this.createMeetingName, promoter: 'test' })
@@ -83,7 +83,7 @@ export default {
       }
     },
     joinMeeting(id) {
-      window.location.href = 'meetings/' + id
+      this.$router.push('meetings/' + id)
     },
     deleteMeeting(id) {
       console.log('delete Meeting (Dummy)')

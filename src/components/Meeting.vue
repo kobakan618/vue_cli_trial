@@ -15,7 +15,7 @@
               <h3 class="panel-title">目的</h3>
             </div>
             <div class="panel-body">
-              <textarea v-model="purpose" class="form-control input-sm" placeholder="会議の目的を入力(Tabで確定)" rows="2" v-on:blur="update()"></textarea>
+              <textarea v-model="purpose" class="form-control input-sm" placeholder="会議の目的を入力(Tabで確定)" rows="2" v-on:blur="purposeUpdate()"></textarea>
             </div>
           </div>
           <div class="panel panel-primary">
@@ -40,7 +40,7 @@
             </div>
             <div class="panel-body">
               <!--音声認識子コンポーネント描画
-                                                                                    -->
+                                                                                                                                -->
               <voiceRecognition></voiceRecognition>
               <br>
               <div class="chat-timeline">
@@ -60,7 +60,8 @@
 <script>
 import Message from './Message.vue'
 import VoiceRecognition from './VoiceRecognition.vue'
-import { wsOpen, wsClose, msSend } from './WsWrapper.js'
+import WsWrapper from '../commonUtils/WsWrapper.js'
+import PropertyStore from '../commonUtils/PropertyStore.js'
 export default {
   name: 'Meething',
   components: {
@@ -79,11 +80,11 @@ export default {
     }
   },
   mounted() {
-    this.start('test')
+    this.start()
   },
   beforeRouteUpdate(to, from, next) {
     this.stop()
-    this.start('test')
+    this.start()
     next()
   },
   beforeRouteLeave(to, from, next) {
@@ -91,22 +92,25 @@ export default {
     next()
   },
   methods: {
-    start(name) {
+    start() {
       this.meetingName = this.$route.params.id
-      this.my_name = name
+      this.my_name = PropertyStore.userInfo.name
       this.chatLogs = []
       this.attendees = []
       this.purpose = ''
-      wsOpen(this.meetingName, this.my_name, this.post_ws_onopen, this.post_ws_onmessage, this.post_ws_onclose)
+      WsWrapper.wsOpen(this.meetingName, this.my_name, this.post_ws_onopen, this.post_ws_onmessage, this.post_ws_onclose)
     },
     stop() {
-      wsClose(this.my_name)
+      WsWrapper.wsClose(this.my_name)
     },
     send_message() {
       if (this.input_message.length > 1) {
-        msSend(this.my_name, this.input_message)
+        WsWrapper.msSend(this.my_name, this.input_message)
       }
       this.input_message = ''
+    },
+    purposeUpdate() {
+      WsWrapper.purposeUpdate(this.purpose)
     },
     post_ws_onopen() {
       // 何もしない

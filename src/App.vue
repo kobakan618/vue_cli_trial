@@ -12,7 +12,7 @@
         </div>
         <ul class="nav pull-right">
           <template v-if="userName === ''">
-            <button type="button" class="btn btn-default navbar-btn" v-on:click="logout">Login</button>
+            <button type="button" class="btn btn-default navbar-btn" v-on:click="login">Login</button>
           </template>
           <template v-else>
             <li class="dropdown">
@@ -37,22 +37,30 @@
 </template>
 
 <script>
-import { getUserInfo, initUserInfo } from './components/UserInfo.js'
+import axios from 'axios' // Ajax通信ライブラリ
+import PropertyStore from './commonUtils/PropertyStore.js'
 export default {
   name: 'app',
   data() {
     return {
-      userName: getUserInfo()
+      userName: PropertyStore.userInfo.name
     }
   },
   mounted() {
 
   },
   methods: {
+    login() {
+      PropertyStore.userInfo.name = 'koba'
+      this.userName = 'koba'
+    },
     logout() {
-      // ログアウトAPIを呼び出す
-      initUserInfo()
-      this.userName = getUserInfo()
+      PropertyStore.userInfo.name = ''
+      this.userName = ''
+      axios.get('/auth/logout')
+        .then(response => { this.meetingList = response.data.results })
+        .catch(function(error) { console.log(error) })
+      this.$router.push('/')
     }
   }
 }
