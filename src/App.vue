@@ -11,10 +11,7 @@
           </a>
         </div>
         <ul class="nav pull-right">
-          <template v-if="userName === ''">
-            <button type="button" class="btn btn-default navbar-btn" v-on:click="login">Login</button>
-          </template>
-          <template v-else>
+          <template v-if="userName !== ''">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 {{userName}}
@@ -38,29 +35,29 @@
 
 <script>
 import axios from 'axios' // Ajax通信ライブラリ
+import Bus from './commonUtils/Bus.js'
 import PropertyStore from './commonUtils/PropertyStore.js'
 export default {
   name: 'app',
   data() {
     return {
-      userName: PropertyStore.userInfo.name
+      userName: PropertyStore.getUserName()
     }
   },
   mounted() {
-
+    Bus.$on('login-success', (vue) => {
+      console.log(localStorage.userName)
+      this.userName = PropertyStore.getUserName()
+    })
   },
   methods: {
-    login() {
-      PropertyStore.userInfo.name = 'koba'
-      this.userName = 'koba'
-    },
     logout() {
-      PropertyStore.userInfo.name = ''
+      PropertyStore.deleteUserName()
       this.userName = ''
       axios.get('/auth/logout')
-        .then(response => { this.meetingList = response.data.results })
-        .catch(function(error) { console.log(error) })
-      this.$router.push('/')
+        .then(response => { console.log(response) })
+        .catch(error => { console.log(error) })
+      this.$router.push('/login')
     }
   }
 }

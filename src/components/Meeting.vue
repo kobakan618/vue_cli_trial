@@ -40,7 +40,7 @@
             </div>
             <div class="panel-body">
               <!--音声認識子コンポーネント描画
-                                                                                                                                -->
+                                                                                                                                                      -->
               <voiceRecognition></voiceRecognition>
               <br>
               <div class="chat-timeline">
@@ -94,7 +94,7 @@ export default {
   methods: {
     start() {
       this.meetingName = this.$route.params.id
-      this.my_name = PropertyStore.userInfo.name
+      this.my_name = PropertyStore.getUserName()
       this.chatLogs = []
       this.attendees = []
       this.purpose = ''

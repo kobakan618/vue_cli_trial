@@ -3,7 +3,7 @@
 var WsWrapper = {
   ws: null,
   wsOpen(wsname, usrname, onopen, onmessage, onclose) {
-    if (this.ws == null) {
+    if (self.ws == null) {
       var hostname = window.location.hostname
       var port = window.location.port
       var protocol = window.location.protocol
@@ -11,17 +11,17 @@ var WsWrapper = {
       if (protocol === 'https:') {
         wsprotocol = 'wss://'
       }
-      this.ws = new WebSocket(wsprotocol + hostname + ':' + port + '/ws/' + wsname + '?username=' + usrname)
+      self.ws = new WebSocket(wsprotocol + hostname + ':' + port + '/ws/' + wsname + '?username=' + usrname)
 
-      this.ws.onopen = function () {
+      self.ws.onopen = function () {
         onopen()
       }
-      this.ws.onmessage = function (evt) {
+      self.ws.onmessage = function (evt) {
         onmessage(evt)
       }
-      this.ws.onclose = function (evt) {
+      self.ws.onclose = function (evt) {
         onclose()
-        this.ws = null
+        self.ws = null
         console.log('connection closed')
       }
     }
@@ -30,8 +30,8 @@ var WsWrapper = {
     }
   },
   wsClose() {
-    if (this.ws != null) {
-      this.ws.close()
+    if (self.ws != null) {
+      self.ws.close()
     }
     else {
       console.log('websocket already closed ..')
@@ -39,8 +39,8 @@ var WsWrapper = {
   },
 
   purposeUpdate(purpose) {
-    if (this.ws != null) {
-      this.ws.send(JSON.stringify({ 'purpose': purpose }))
+    if (self.ws != null) {
+      self.ws.send(JSON.stringify({ 'purpose': purpose }))
     }
     else {
       console.log('websocket not opened !!')
@@ -48,18 +48,18 @@ var WsWrapper = {
   },
 
   msSend(name, message) {
-    if (this.ws != null) {
+    if (self.ws != null) {
       // メッセージをjson形式に変更
-      this.ws.send(JSON.stringify({ 'messages': [{ 'name': name, 'message': message, 'tag': 'none' }] }))
+      self.ws.send(JSON.stringify({ 'messages': [{ 'name': name, 'message': message, 'tag': 'none' }] }))
     }
     else {
       console.log('websocket not opened !!')
     }
   },
   msUpdate(id, name, message, tag) {
-    if (this.ws != null) {
+    if (self.ws != null) {
       // メッセージをjson形式に変更
-      this.ws.send(JSON.stringify({ 'messages': [{ 'id': id, 'name': name, 'message': message, 'tag': tag }] }))
+      self.ws.send(JSON.stringify({ 'messages': [{ 'id': id, 'name': name, 'message': message, 'tag': tag }] }))
     }
     else {
       console.log('websocket not opened !!')

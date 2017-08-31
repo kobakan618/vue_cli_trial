@@ -13,9 +13,11 @@
 </template>
 
 <script>
-import swal from '../../static/sweetalert.min.js'
 import WsWrapper from '../commonUtils/WsWrapper.js'
 import PropertyStore from '../commonUtils/PropertyStore.js'
+import Vue from 'vue'
+import VueSweetAlert from 'vue-sweetalert'
+Vue.use(VueSweetAlert)
 /**
  * 音声認識ステータス定義
  */
@@ -70,14 +72,14 @@ export default {
   },
   methods: {
     start() {
-      this.my_name = PropertyStore.userInfo.name
+      this.my_name = PropertyStore.getUserName()
       if (!this.isActive) {
         return
       }
       var self = this
       if (!('webkitSpeechRecognition' in window)) {
         this.status = VR_STATUS.not_support_error
-        swal('Oops...', 'Chrome以外のブラウザは音声認識機能は使えません\nテキスト入力のみ利用できます', 'error')
+        this.$swal('Oops...', 'Chrome以外のブラウザは音声認識機能は使えません\nテキスト入力のみ利用できます', 'error')
         return
       }
       console.log(this.selected_lang)
